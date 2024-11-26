@@ -20,4 +20,20 @@ connection.connect((err) => {
     console.log('Connected to the database as ID', connection.threadId);
 });
 
+/**
+ * execute an query in mysql
+ * @param {string} query the query to execute
+ * @param {Array<any>} params the query params
+ * @returns {any} the query result
+ */
+export function query(query, params) {
+    return new Promise((resolve, reject) => {
+        console.log("querying:", query);
+        connection.query(query, params, (error, result) => {
+            if (error) return reject(new Error('fail executing query'));
+            return resolve(result);
+        });
+    });
+}
+
 export default connection;
