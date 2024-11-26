@@ -1,3 +1,4 @@
+import { StudentNotFound } from '../Error/StudentNotFount.js';
 import { query } from '../config/connection.js';
 
 /**
@@ -39,6 +40,21 @@ export class Student {
     get note1() { return this._note1; }
     get note2() { return this._note2; }
     get note3() { return this._note3; }
+    /**
+     * @public
+     * get the student data
+     * @returns {student} the student data
+     */
+    get data() {
+        return {
+            code: this.code,
+            first_name: this.first_name,
+            last_name: this.last_name,
+            note1: this.note1,
+            note2: this.note2,
+            note3: this.note3
+        }
+    }
 
     set first_name(value) {
         this.beforeUpdate.first_name = this._first_name;
@@ -91,7 +107,7 @@ export class Student {
         console.log("getting student...");
         /** @type {student[]} */
         const data = await query(`SELECT * FROM ${STUDENTS_TABLE} WHERE code = ?`, [code]);
-        if (data.length == 0) throw new Error('student not found');
+        if (data.length == 0) throw new StudentNotFound(code);
         return new Student(data[0]);
     }
     /**
@@ -143,3 +159,4 @@ export class Student {
         return await query(`DELETE FROM ${STUDENTS_TABLE} WHERE code = ?`, [code]);
     }
 }
+export default Student;
