@@ -1,9 +1,15 @@
 {
     "cSpell.words": [
         "esnext",
+        "generalaverage",
+        "highestaverage",
+        "highestaveragestudent",
         "Inno",
+        "lowestaverage",
+        "lowestaveragestudent",
         "plpgsql",
         "unicode",
+        "varchar",
         "VARCHAR"
     ]
 }

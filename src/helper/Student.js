@@ -141,7 +141,7 @@ export class Student {
     static async getAll(page, limit) {
         const skip = (page - 1) * limit;
         /** @type {student[]} */
-        const data = await query(`SELECT * FROM ${STUDENTS_TABLE} WHERE 1 LIMIT ? OFFSET ?`, [limit, skip]);
+        const data = await query(`SELECT * FROM ${STUDENTS_TABLE} WHERE TRUE LIMIT ? OFFSET ?`, [limit, skip]);
         return data.map((student) => new Student(student));
     }
     /**
@@ -154,7 +154,7 @@ export class Student {
     static async create(data) {
         const { first_name, last_name, code, note1, note2, note3 } = data;
         console.log("inserting student...");
-        const result = await query(`INSERT INTO ${STUDENTS_TABLE} (code, first_name, last_name, note1, note2, note3) VALUES (?, ?, ?, ?, ?, ?)`, [code, first_name, last_name, note1, note2, note3]);
+        const result = await query(`INSERT INTO ${STUDENTS_TABLE} (code, first_name, last_name, note1, note2, note3) VALUES (?, ?, ?, ?, ?, ?)`, [code, first_name, last_name, note1 || 0, note2 || 0, note3 || 0]);
         if (result.affectedRows === 0) throw new Error('fail inserting student');
         const student = await Student.get(code);
         return student;
@@ -239,11 +239,11 @@ export class Student {
             ), query('SELECT AVG(average) AS generalAverage FROM students;')
         ])
         return {
-            highestAverageStudent: HighestAverageStudent[0].highestAverageStudent,
-            highestAverage: HighestAverageStudent[0].highestAverage,
-            lowestAverageStudent: LowestAverageStudent[0].lowestAverageStudent,
-            lowestAverage: LowestAverageStudent[0].lowestAverage,
-            generalAverage: GeneralAverage[0].generalAverage
+            highestAverageStudent: HighestAverageStudent[0].highestaveragestudent,
+            highestAverage: HighestAverageStudent[0].highestaverage,
+            lowestAverageStudent: LowestAverageStudent[0].lowestaveragestudent,
+            lowestAverage: LowestAverageStudent[0].lowestaverage,
+            generalAverage: GeneralAverage[0].generalaverage
         };
     }
 }
