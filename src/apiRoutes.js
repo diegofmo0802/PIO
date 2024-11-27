@@ -11,5 +11,6 @@ export function addRoutes(app) {
     app.get('/api/student/:code', studentAction.getStudent);
     app.post('/api/student', studentAction.createStudent);
     app.put('/api/student/:code', studentAction.updateStudent);
-    app.delete('/api/students/:code', studentAction.deleteStudent);
+    app.delete('/api/student/:code', studentAction.deleteStudent);
+    app.get('/api/statistics', studentAction.getStatistics);
 }

@@ -26,11 +26,11 @@ connection.connect((err) => {
  * @param {Array<any>} params the query params
  * @returns {any} the query result
  */
-export function query(query, params) {
+export function query(query, params = []) {
     return new Promise((resolve, reject) => {
         console.log("querying:", query);
         connection.query(query, params, (error, result) => {
-            if (error) return reject(new Error('fail executing query'));
+            if (error) return reject(new Error('fail executing query: ' + error));
             return resolve(result);
         });
     });

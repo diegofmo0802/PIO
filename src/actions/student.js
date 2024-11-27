@@ -35,7 +35,9 @@ export async function getStudents(request, response) {
  * @param {Response} response - The response object
  */
 export async function getStudent(request, response) {
-    const code = String(request.params.code);
+    const codeParam = String(request.params.code);
+    const code = parseInt(codeParam, 10);
+    if (isNaN(code)) return void response.status(400).json({ error: 'code must be a number' });
     if (!code) return void response.status(400).json({ error: 'code is required' });
     try {
         const student = await Student.get(code);
@@ -59,8 +61,8 @@ export async function createStudent(request, response) {
 
     const data = { first_name, last_name, code, note1, note2, note3 };
     try {
-        await Student.create(data);
-        response.status(201).json({ message: 'student created' });
+        const student = await Student.create(data);
+        response.status(201).json({ ...student.data });
     } catch (error) {
         console.error(error);
         response.status(500).json({ error: 'fail creating student' });
@@ -73,7 +75,9 @@ export async function createStudent(request, response) {
  * @param {Response} response - The response object
  */
 export async function updateStudent(request, response) {
-    const code = String(request.params.code);
+    const codeParam = String(request.params.code);
+    const code = parseInt(codeParam, 10);
+    if (isNaN(code)) return void response.status(400).json({ error: 'code must be a number' });
     if (!code) return void response.status(400).json({ error: 'code is required' });
     const { first_name, last_name, note1 = null, note2 = null, note3 = null } = request.body;
     const data = {};
@@ -85,7 +89,8 @@ export async function updateStudent(request, response) {
     try {
         const student = await Student.get(code);
         await student.update(data);
-        response.json({ message: 'student updated' });
+        console.log(student.data);
+        response.json({ ...student.data });
     } catch (error) {
         if (error instanceof StudentNotFound) return void response.status(404).json({ error: error.message });
         console.error(error)
@@ -99,7 +104,9 @@ export async function updateStudent(request, response) {
  * @param {Response} response - The response object
  */
 export async function deleteStudent(request, response) {
-    const code = String(request.params.code);
+    const codeParam = String(request.params.code);
+    const code = parseInt(codeParam, 10);
+    if (isNaN(code)) return void response.status(400).json({ error: 'code must be a number' });
     if (!code) return void response.status(400).json({ error: 'code is required' });
     try {
         const student = await Student.get(code);
@@ -109,6 +116,21 @@ export async function deleteStudent(request, response) {
         if (error instanceof StudentNotFound) return void response.status(404).json({ error: error.message });
         console.error(error)
         response.status(500).json({ error: 'fail deleting student' });
+    }
+}
+
+/**
+ * GET route handler for fetching statistics
+ * @param {Request} request - The request object
+ * @param {Response} response - The response object
+ */
+export async function getStatistics(request, response) {
+    try {
+        const statistics = await Student.getStatistics();
+        response.json(statistics);
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ error: 'fail fetching statistics' });
     }
 }
 /**
