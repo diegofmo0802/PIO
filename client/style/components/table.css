@@ -1,0 +1,63 @@
+.table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    
+}
+.table {
+    border: 1px solid #00000044;
+    border-radius: 8px;
+    background: var(--color-primary-background, #f9f9f9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-collapse: collapse;
+    width: 100%;
+}
+.table > .table-head {
+    background: var(--color-secondary-item, #BBBBBB) ;
+}
+.table > .table-head > th {
+    padding: var(--spacing-medium, 0.5em);
+    text-align: center;
+    border: #00000044 1px solid;
+}
+.table > .table-body {
+    background: var(--color-secondary-background, #fff);
+}
+.table > .table-body > tr {
+    background: var(--color-primary-background, #f8f9fa);
+    padding: var(--spacing-small, 0.2em);
+    text-align: center;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.table > .table-body > tr > td {
+    padding: var(--spacing-small, 0.2em);
+    border: #00000044 1px solid;
+}
+.table > .table-body > tr:hover {
+    background: var(--color-secondary-item, #BBBBBB);
+}
+.table > .table-body > .table-row-selected {
+    background: var(--color-primary-item, #BBBBBB);
+    color: var(--color-secondary-text, #fff);
+}
+.table-action {
+    background: var(--color-primary-item, #BBBBBB);
+    color: var(--color-secondary-background, #fff);
+    padding: var(--spacing-small, 0.2em);
+    border: none;
+    border-radius: var(--spacing-small, 0.2em);
+    cursor: pointer;
+    font-size: 1em;
+    padding: var(--spacing-medium, 0.2em);
+}
+.table-action:hover {
+    background: var(--color-secondary-item, #BBBBBB);
+}
+.table > .table-body > .table-row-selected > td > .table-action {
+    background: var(--color-quaternary-item, #BBBBBB);
+    color: var(--color-primary-text, #000);
+}
