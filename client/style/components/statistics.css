@@ -1,0 +1,15 @@
+.statistics-container {
+    margin-bottom: 1em;
+    width: 100%;
+    padding: 1em;
+    border: 1px solid #00000044;
+    border-radius: 8px;
+    background: var(--color-primary-background, #f9f9f9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.statistics-container p {
+    margin: 0.5em 0;
+    font-size: 1em;
+    color: var(--color-primary-text, #333);
+}
