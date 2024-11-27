@@ -1,5 +1,5 @@
-import { StudentNotFound } from '../Error/StudentNotFount';
-import Student from '../helper/Student';
+import { StudentNotFound } from '../Error/StudentNotFount.js';
+import Student from '../helper/Student.js';
 
 /**
  * @typedef {import('express').Express} Express

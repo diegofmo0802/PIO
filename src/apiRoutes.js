@@ -1,4 +1,4 @@
-import * as studentAction from './actions/student';
+import * as studentAction from './actions/student.js';
 
 /**
  * @typedef {import('express').Express} Express
