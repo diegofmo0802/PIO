@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="es" translate="no">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Student manager</title>
-    </head>
-    <body>
-        
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/client/style/main.css">
+    <title>Student manager</title>
+</head>
+
+<body id="root">
+    <nav id="menu">
+        <div class="logo">
+            <h1>Student manager</h1>
+        </div>
+        <div class="menu-spacing"></div>
+        <div id="menu-options"></div>
+    </nav>
+    <div id="content">
+        <div id="content">
+            <div class="table-container">
+                <table class="table">
+                    <thead class="table-head">
+                        <th>Code</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Note 1</th>
+                        <th>Note 2</th>
+                        <th>Note 3</th>
+                    </thead>
+                    <tbody class="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/client/logic/index.js"></script>
+</body>
+
 </html>
