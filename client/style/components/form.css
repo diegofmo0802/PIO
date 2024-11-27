@@ -1,0 +1,65 @@
+.form-container {
+    background: var(--color-primary-background);
+    padding: var(--spacing-medium);
+    border-radius: var(--spacing-small);
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: #00000022 1px solid;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-medium);
+    margin-bottom: var(--spacing-medium);
+    border: 1px solid var(--color-secondary-text);
+    border-radius: var(--spacing-small);
+}
+
+.form-input input[type="number"],
+.form-input input[type="text"] {
+    width: 100%;
+    padding: var(--spacing-small);
+    border: none;
+    outline: none;
+}
+
+.form-error {
+    color: var(--color-tertiary-item);
+    font-size: 0.8em;
+    margin-bottom: var(--spacing-medium);
+}
+
+.form-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-button {
+    background: var(--color-primary-item);
+    color: var(--color-secondary-background);
+    padding: var(--spacing-medium);
+    border: none;
+    border-radius: var(--spacing-small);
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.form-cancel {
+    background: var(--color-tertiary-item);
+    margin-left: var(--spacing-medium);
+}
+
+.form-button:hover {
+    background: var(--color-secondary-item);
+}
+.form-cancel:hover {
+    background: var(--color-quaternary-text);
+}
+
+
