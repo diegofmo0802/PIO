@@ -13,25 +13,30 @@ import Student from '../helper/Student';
  * @param {Response} response - The response object
  */
 export async function getStudents(request, response) {
-    const code = request.query.code ? String(request.query.code) : null;
-
-    if (!code) {
-        const pageParam = String(request.query.page || 1);
-        const limitParam = String(request.query.limit || 10);
-        const page = parseInt(pageParam, 10);
-        const limit = parseInt(limitParam, 10);
-        try {
-            const students = Student.getAll(page, limit);
-            const data = (await students).map((student) => student.data);
-            response.json({
-                page, limit, data
-            });
-        } catch (error) {
-            console.error(error);
-            response.status(500).json({ error: 'fail fetching students' });
-        }
-        return;
+    const pageParam = String(request.query.page || 1);
+    const limitParam = String(request.query.limit || 10);
+    const page = parseInt(pageParam, 10);
+    const limit = parseInt(limitParam, 10);
+    try {
+        const students = Student.getAll(page, limit);
+        const data = (await students).map((student) => student.data);
+        response.json({
+            page, limit, data
+        });
+    } catch (error) {
+        console.error(error);
+        response.status(500).json({ error: 'fail fetching students' });
     }
+    return;
+}
+/**
+ * GET route handler for fetching a student
+ * @param {Request} request - The request object
+ * @param {Response} response - The response object
+ */
+export async function getStudent(request, response) {
+    const code = String(request.params.code);
+    if (!code) return response.status(400).json({ error: 'code is required' });
     try {
         const student = await Student.get(code);
         response.json(student.data);
@@ -68,8 +73,9 @@ export async function createStudent(request, response) {
  * @param {Response} response - The response object
  */
 export async function updateStudent(request, response) {
-    const { first_name, last_name, code, note1 = null, note2 = null, note3 = null } = request.body;
+    const code = String(request.params.code);
     if (!code) return response.status(400).json({ error: 'code is required' });
+    const { first_name, last_name, note1 = null, note2 = null, note3 = null } = request.body;
     const data = {};
     if (first_name) data.first_name = first_name;
     if (last_name) data.last_name = last_name;
@@ -93,7 +99,7 @@ export async function updateStudent(request, response) {
  * @param {Response} response - The response object
  */
 export async function deleteStudent(request, response) {
-    const code = String(request.query.code);
+    const code = String(request.params.code);
     if (!code) return response.status(400).json({ error: 'code is required' });
     try {
         const student = await Student.get(code);
@@ -107,9 +113,9 @@ export async function deleteStudent(request, response) {
 }
 /**
  * Routes to access the students
- * GET /api/students?page=number&limit=number
- * GET /api/students?code=string
- * POST /api/students
- * PUT /api/students
- * DELETE /api/students?code=string
+ * GET /api/student?page=number&limit=number
+ * GET /api/student
+ * POST /api/student/:code
+ * PUT /api/student/:code
+ * DELETE /api/student/:code
  */
