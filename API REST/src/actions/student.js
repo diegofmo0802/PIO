@@ -36,12 +36,12 @@ export async function getStudents(request, response) {
  */
 export async function getStudent(request, response) {
     const code = String(request.params.code);
-    if (!code) return response.status(400).json({ error: 'code is required' });
+    if (!code) return void response.status(400).json({ error: 'code is required' });
     try {
         const student = await Student.get(code);
         response.json(student.data);
     } catch (error) {
-        if (error instanceof StudentNotFound) return response.status(404).json({ error: error.message });
+        if (error instanceof StudentNotFound) return void response.status(404).json({ error: error.message });
         console.error(error);
         response.status(500).json({ error: 'fail fetching student' });
     }
@@ -54,8 +54,8 @@ export async function getStudent(request, response) {
 export async function createStudent(request, response) {
     const { first_name, last_name, code, note1 = null, note2 = null, note3 = null } = request.body;
 
-    if (!first_name) return response.status(400).json({ error: 'first_name is required' });
-    if (!last_name) return response.status(400).json({ error: 'last_name is required' });
+    if (!first_name) return void response.status(400).json({ error: 'first_name is required' });
+    if (!last_name) return void response.status(400).json({ error: 'last_name is required' });
 
     const data = { first_name, last_name, code, note1, note2, note3 };
     try {
@@ -74,7 +74,7 @@ export async function createStudent(request, response) {
  */
 export async function updateStudent(request, response) {
     const code = String(request.params.code);
-    if (!code) return response.status(400).json({ error: 'code is required' });
+    if (!code) return void response.status(400).json({ error: 'code is required' });
     const { first_name, last_name, note1 = null, note2 = null, note3 = null } = request.body;
     const data = {};
     if (first_name) data.first_name = first_name;
@@ -87,7 +87,7 @@ export async function updateStudent(request, response) {
         await student.update(data);
         response.json({ message: 'student updated' });
     } catch (error) {
-        if (error instanceof StudentNotFound) return response.status(404).json({ error: error.message });
+        if (error instanceof StudentNotFound) return void response.status(404).json({ error: error.message });
         console.error(error)
         response.status(500).json({ error: 'fail updating student' });
     }
@@ -100,13 +100,13 @@ export async function updateStudent(request, response) {
  */
 export async function deleteStudent(request, response) {
     const code = String(request.params.code);
-    if (!code) return response.status(400).json({ error: 'code is required' });
+    if (!code) return void response.status(400).json({ error: 'code is required' });
     try {
         const student = await Student.get(code);
         await student.delete();
         response.json({ message: 'student deleted' });
     } catch (error) {
-        if (error instanceof StudentNotFound) return response.status(404).json({ error: error.message });
+        if (error instanceof StudentNotFound) return void response.status(404).json({ error: error.message });
         console.error(error)
         response.status(500).json({ error: 'fail deleting student' });
     }
