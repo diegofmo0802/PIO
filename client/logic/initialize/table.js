@@ -4,20 +4,38 @@ import EditUserForm from "../components/EditUserForm.js";
 import StudentTable from "../components/Table.js";
 import { statistics, updateStatistics } from "./statistic.js";
 
+/**
+ * @typedef {import('../types.js').student.data} student
+ */
+
 export const table = new StudentTable();
 
-const limit = 10;
+export const limit = 10;
 export let currentPage = 1;
+export let missingInPage = 0
 
-export async function updateTable() {
+/**
+ * 
+ * @param {((students: student[]) => student[]) | null} filter 
+ * @returns {Promise<Element<'tr'>[]>} the added rows
+ */
+export async function updateTable(filter = null) {
     try {
         const response = await Api.getStudents(currentPage, limit);
         console.log("students query", response);
-        table.addRow(...response.data);
-        if (response.data.length == limit) table.dispatchNextEndEvent();
-        currentPage++;
+        const students = !filter ? response.data : filter(response.data);
+        const rows = table.addRow(...students);
+        if (response.data.length == limit) {
+            table.dispatchNextEndEvent();
+            currentPage++;
+            missingInPage = 0;
+        } else {
+            missingInPage = limit - response.data.length;
+        }
+        return rows;
     } catch (error) {
         console.log("error", error);
+        return [];
     }
 }
 
@@ -54,11 +72,7 @@ table.on('edit', (student, element) => {
         }).finally(() => {
             content.clean();
             element.observer.once('add', () => {
-                element.HTMLElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                element.HTMLElement.classList.add('table-row-selected');
-                setTimeout(() => {
-                    element.HTMLElement.classList.remove('table-row-selected');
-                }, 1000);
+                table.focusRow(element);
             });
             content.append(statistics, table);
         });

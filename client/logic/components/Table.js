@@ -17,6 +17,8 @@ export class StudentTable extends Component {
     body;
     /** @protected @type {Element<'tr'>} */
     endItem;
+    /** @protected @type {Element<'tr'> | null} */
+    finalRow = null;
     /** @protected @type {boolean} */
     dispatchNextEnd = false;
     constructor() { super();
@@ -61,6 +63,9 @@ export class StudentTable extends Component {
     dispatchNextEndEvent() {
         this.dispatchNextEnd = true;
     }
+    waitingForNextEvent() {
+        return this.dispatchNextEnd;
+    }
     /**
      * set the table data
      * @param {...studentData} data - The data to add to the table
@@ -75,14 +80,19 @@ export class StudentTable extends Component {
     /**
      * add a row to the table
      * @param {...studentData} data - The data to add to the table
+     * @returns {Element<'tr'>[]} - The rows added to the table
      */
     addRow(...data) {
+        const rows = [];
         for (let student of data) {
             const row = this.createRow(student);
+            rows.push(row);
             this.body.append(row);
         }
+        this.finalRow = rows[rows.length - 1];
         this.endItem.remove();
         this.body.append(this.endItem);
+        return rows;
     }
     /**
      * @public
@@ -118,6 +128,19 @@ export class StudentTable extends Component {
                 this.dispatch('delete', student, element);
             }))
         ]
+    }
+
+    /**
+     * @public
+     * focus a row
+     * @param {Element<'tr'>} row - The row to focus
+     */
+    focusRow(row) {
+        row.HTMLElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        row.HTMLElement.classList.add('table-row-selected');
+        setTimeout(() => {
+            row.HTMLElement.classList.remove('table-row-selected');
+        }, 1000);
     }
 }
 export default StudentTable;

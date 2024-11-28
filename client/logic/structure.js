@@ -2,7 +2,8 @@ import { Api } from './Api/Api.js';
 import { Element } from './WebApp/WebApp.js';
 import NewStudentForm from './components/NewStudentForm.js';
 import StudentTable from './components/Table.js';
-import { table } from './initialize/table.js';
+import { statistics } from './initialize/statistic.js';
+import { table, limit as tableLimitInPage, missingInPage as missingInTable, updateTable } from './initialize/table.js';
 
 const menuOptions = Element.get('#menu-options');
 
@@ -19,16 +20,28 @@ addStudent.on('click', () => {
     form.on('submit', (data) => {
         Api.createStudent(data).then(() => {
             alert('Student created');
+            console.log(table.waitingForNextEvent(), missingInTable);
+            if (!table.waitingForNextEvent()) {
+                const missing = missingInTable;
+                const skip = tableLimitInPage - missing;
+                console.log(missing, skip);
+                updateTable((result) => {
+                    return result.slice(skip);
+                }).then((added) => {
+                    if (added.length > 0)
+                    table.focusRow(added[added.length - 1]);
+                });
+            }
         }).catch((error) => {
             alert(error);
         }).finally(() => {
             content.clean();
-            content.append(table);
+            content.append(statistics, table);
         });
     });
     form.on('cancel', () => {
         content.clean();
-        content.append(table);
+        content.append(statistics, table);
     });
     content.clean();
     content.append(form)
