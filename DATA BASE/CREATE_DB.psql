@@ -1,7 +1,8 @@
-CREATE USER pio WITH PASSWORD '****';
+-- CREATE USER pio WITH PASSWORD '****';
 
 -- Create database pio
 CREATE DATABASE pio OWNER pio ENCODING 'utf8';
+-- GRANT ALL PRIVILEGES ON DATABASE pio TO pio;
 
 -- Create table student if not exists
 CREATE TABLE IF NOT EXISTS students (
