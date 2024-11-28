@@ -1,6 +1,7 @@
 /**
  * @typedef {import('../types').student.data} studentData
  * @typedef {import('../types').student.update} studentUpdate
+ * @typedef {import('../types').student.create} studentCreate
  * @typedef {{page: number, limit: number, data: studentData[]}} studentPage
  * @typedef {import('../types').student.statistics} statistics
  */
@@ -32,7 +33,7 @@ export class Api {
     }
     /**
      * create the student in the api
-     * @param {studentData} data the data of the student
+     * @param {studentCreate} data the data of the student
      * @returns {Promise<studentData>}
      */
     static async createStudent(data) {
