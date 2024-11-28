@@ -8,33 +8,30 @@ const {
     DB_NAME = 'default_db'
 } = process.env;
 
-const client = new Client({
-    host: DB_HOST, user: DB_USER, password: DB_PASS, database: DB_NAME
-});
+let isConnected = false;
 
-/* @type {mysql.Connection} */
-// const connection = mysql.createConnection({
-//     host: DB_HOST, user: DB_USER, password: DB_PASS, database: DB_NAME
-// });
+async function getConnection() {
+    const connection = new Client({
+        host: DB_HOST, user: DB_USER, password: DB_PASS, database: DB_NAME
+    });
+    await connection.connect();
+    isConnected = true;
+    connection.on('end', () => {
+        isConnected = false;
+    });
+    return connection;
+}
 
-const connection = client;
-
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to the database:', err.stack);
-        return;
-    }
-    console.log('Connected to the database');
-});
+let connection = await getConnection();
 
 /**
  * execute an query in mysql
  * @param {string} query the query to execute
  * @param {Array<any>} params the query params
- * @returns {any} the query result
+ * @returns {Promise<any>} the query result
  */
 export function query(query, params = []) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         query = sqlParamsToPostgresParams(query);
         console.log("querying:", query);
         connection.query(query, params, (error, result) => {
@@ -46,7 +43,13 @@ export function query(query, params = []) {
     });
 }
 /**
- * execute an query in mysql
+ * close the connection to mysql
+ */
+export function closeConnection() {
+    if (isConnected) connection.end();
+}
+/**
+ * Change the param pointers in mysql query's (?, ?) to postgres query's ($1, $2)
  * @param {string} query the query to execute
  * @returns {any} the query result
  */

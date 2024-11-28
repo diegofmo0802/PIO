@@ -237,7 +237,7 @@ export class Student {
                 "ORDER BY lowestAverage ASC " +
                 "LIMIT 1 "
             ), query('SELECT AVG(average) AS generalAverage FROM students;')
-        ])
+        ]);
         return {
             highestAverageStudent: HighestAverageStudent[0].highestaveragestudent,
             highestAverage: HighestAverageStudent[0].highestaverage,
