@@ -238,12 +238,34 @@ export class Student {
                 "LIMIT 1 "
             ), query('SELECT AVG(average) AS generalAverage FROM students;')
         ]);
+        let highestAverageStudent, highestAverage;
+        let lowestAverageStudent, lowestAverage;
+        let generalAverage;
+        if (HighestAverageStudent.length == 0) {
+            highestAverageStudent = '-';
+            highestAverage = 0;
+        } else {
+            highestAverageStudent = HighestAverageStudent[0].highestaveragestudent;
+            highestAverage = HighestAverageStudent[0].highestaverage;
+        }
+        if (LowestAverageStudent.length == 0) {
+            lowestAverageStudent = '-';
+            lowestAverage = 0;
+        } else {
+            lowestAverageStudent = LowestAverageStudent[0].lowestaveragestudent;
+            lowestAverage = LowestAverageStudent[0].lowestaverage;
+        }
+        if (GeneralAverage.length == 0) {
+            generalAverage = 0;
+        } else {
+            generalAverage = GeneralAverage[0].generalaverage;
+        }
         return {
-            highestAverageStudent: HighestAverageStudent[0].highestaveragestudent,
-            highestAverage: HighestAverageStudent[0].highestaverage,
-            lowestAverageStudent: LowestAverageStudent[0].lowestaveragestudent,
-            lowestAverage: LowestAverageStudent[0].lowestaverage,
-            generalAverage: GeneralAverage[0].generalaverage
+            highestAverageStudent,
+            highestAverage,
+            lowestAverageStudent,
+            lowestAverage,
+            generalAverage
         };
     }
 }
