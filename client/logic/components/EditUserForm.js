@@ -1,5 +1,5 @@
 import TextInput from "../WebApp/App/basic.components/TextInput.js";
-import { Component, Element } from "../WebApp/WebApp.js";
+import { Component, Element, Utilities } from "../WebApp/WebApp.js";
 
 /**
  * @typedef {import('../types').student.data} studentData
@@ -70,6 +70,24 @@ export class EditUserForm extends Component {
         cancelButton.on('click', () => {
             this.dispatch('cancel');
         });
+        this.note1.on('input', this.getNumericParser(0, 5, this.note1));
+        this.note2.on('input', this.getNumericParser(0, 5, this.note2));
+        this.note3.on('input', this.getNumericParser(0, 5, this.note3));
+    }
+    
+    /**
+     * @protected
+     * @param {number} min
+     * @param {number} max
+     * @param {Element<'input'>} element
+     * @returns {() => void}
+     */
+    getNumericParser(min, max, element) {
+        return Utilities.debounce(() => {
+            const note1 = parseFloat(element.HTMLElement.value);
+            if (isNaN(note1) || note1 < min) return element.HTMLElement.value = '0';
+            if (note1 > max) return element.HTMLElement.value = '5';
+        }, 700).bind(this)
     }
     /**
      * get the form data
