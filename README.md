@@ -11,6 +11,15 @@
 # Entrega 1
 Aquí esta el [enlace al tablero de trello](https://trello.com/invite/b/6748d45d382e462a9393cedd/ATTI40925108e09081cb620828a43d6889cc55D7983C/pio)
 
+# Entrega 2
+Se puede ejecutar entrando a la carpeta **PYTHON PROGRAM**
+```bash
+# en Linux
+python3 main.py
+# en windows
+python main.py
+```
+
 ## Entrega 3 y 6
 La entrega 3 y 6 se unificaron:
 - La app esta desplegada en [pio.mysaml.com](https://pio.mysaml.com)
