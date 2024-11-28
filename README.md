@@ -13,6 +13,7 @@ Aquí esta el [enlace al tablero de trello](https://trello.com/invite/b/6748d45d
 
 ## Entrega 3 y 6
 La entrega 3 y 6 se unificaron:
+- La app esta desplegada en [pio.mysaml.com](https://pio.mysaml.com)
 - La carpeta **client/** corresponde a la entrega 3 (El cliente con HTML, CSS)
 - La carpeta **src/** corresponde al api REST, diseñada con node y express
 - Se puede ejecutar:
