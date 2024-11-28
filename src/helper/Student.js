@@ -141,7 +141,7 @@ export class Student {
     static async getAll(page, limit) {
         const skip = (page - 1) * limit;
         /** @type {student[]} */
-        const data = await query(`SELECT * FROM ${STUDENTS_TABLE} WHERE TRUE ORDER BY createdAt DESC LIMIT ? OFFSET ?`, [limit, skip]);
+        const data = await query(`SELECT * FROM ${STUDENTS_TABLE} WHERE TRUE ORDER BY createdAt ASC LIMIT ? OFFSET ?`, [limit, skip]);
         return data.map((student) => new Student(student));
     }
     /**
